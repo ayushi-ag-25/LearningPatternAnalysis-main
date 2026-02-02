@@ -1,0 +1,6 @@
+
+.venv/
+algoForKMeans.py
+whyKMeansWorks.py
+__pycache__/
+*.py[cod]
