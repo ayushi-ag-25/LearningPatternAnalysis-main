@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TeachInsights AI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+      color: #fff;
+    }
+
+    header { text-align:center; padding:40px 20px; }
+
+    .container { max-width:1100px; margin:auto; padding:20px; }
+
+    .toggle-buttons {
+      display:flex; justify-content:center; gap:25px; margin:40px 0;
+    }
+
+    button {
+      padding:16px 28px;
+      border-radius:30px;
+      border:none;
+      cursor:pointer;
+      background:rgba(255,255,255,0.15);
+      color:#fff;
+    }
+
+    button.active {
+      background: linear-gradient(135deg,#00c6ff,#0072ff);
+    }
+
+    .card {
+      display:none;
+      background:rgba(255,255,255,0.1);
+      padding:35px;
+      border-radius:20px;
+    }
+
+    .card.active { display:block; }
+
+    input, select {
+      width:100%;
+      padding:14px;
+      margin-bottom:16px;
+      border-radius:12px;
+      border:none;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .proceed-btn {
+      width:100%;
+      padding:16px;
+      border-radius:30px;
+      border:none;
+      background:linear-gradient(135deg,#00f260,#0575e6);
+      color:#fff;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .insights {
+      display:none;
+      margin-top:30px;
+      padding:25px;
+      border-radius:16px;
+      background:rgba(0,0,0,0.4);
+    }
+
+    .badge {
+      display:inline-block;
+      margin-bottom:15px;
+      padding:6px 14px;
+      border-radius:20px;
+      font-size:12px;
+      background:linear-gradient(135deg,#ff512f,#dd2476);
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>TeachInsights AI</h1>
+  <p>AI-Powered Supervised & Unsupervised Learning</p>
+</header>
+
+<div class="container">
+
+  <div class="toggle-buttons">
+    <button id="csvBtn" class="active">📂 Class CSV Analysis</button>
+    <button id="singleBtn">👤 Single Student Prediction</button>
+  </div>
+
+  <!-- CSV -->
+  <div id="csvCard" class="card active">
+    <span class="badge">Unsupervised Learning</span>
+    <h2>Upload Class Dataset</h2>
+
+    <input type="file" id="csvFile" accept=".csv">
+    <button class="proceed-btn" onclick="showInsights()">Run AI Analysis</button>
+
+    <div id="insights" class="insights">
+      <h3>AI Teaching Insights</h3>
+      <p>CSV analyzed successfully.</p>
+    </div>
+  </div>
+
+  <!-- STUDENT -->
+  <div id="singleCard" class="card">
+    <span class="badge">Supervised Learning</span>
+    <h2>Student Performance Prediction</h2>
+
+    <form class="grid" id="studentForm">
+      <input name="Hours_Studied" type="number" placeholder="Hours Studied">
+      <input name="Attendance" type="number" placeholder="Attendance (%)">
+      <input name="Sleep_Hours" type="number" step="0.1" placeholder="Sleep Hours">
+      <input name="Previous_Scores" type="number" placeholder="Previous Scores">
+      <input name="Tutoring_Sessions" type="number" placeholder="Tutoring Sessions">
+      <input name="Physical_Activity" type="number" step="0.1" placeholder="Physical Activity">
+
+      <select name="Parental_Involvement"><option disabled selected>Parental Involvement</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select name="Access_to_Resources"><option disabled selected>Access to Resources</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select name="Motivation_Level"><option disabled selected>Motivation Level</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select name="Gender"><option disabled selected>Gender</option><option>Male</option><option>Female</option></select>
+    </form>
+
+    <button class="proceed-btn" onclick="predict()">Predict Performance</button>
+
+    <div class="insights" id="studentInsight">
+      <h3>AI Teaching Insights</h3>
+      <div class="output"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const csvBtn = document.getElementById("csvBtn");
+const singleBtn = document.getElementById("singleBtn");
+const csvCard = document.getElementById("csvCard");
+const singleCard = document.getElementById("singleCard");
+
+csvBtn.onclick = () => {
+  csvBtn.classList.add("active");
+  singleBtn.classList.remove("active");
+  csvCard.classList.add("active");
+  singleCard.classList.remove("active");
+};
+
+singleBtn.onclick = () => {
+  singleBtn.classList.add("active");
+  csvBtn.classList.remove("active");
+  singleCard.classList.add("active");
+  csvCard.classList.remove("active");
+};
+
+async function showInsights() {
+  document.getElementById("insights").style.display = "block";
+
+  const file = document.getElementById("csvFile").files[0];
+  if (!file) return alert("Please upload CSV");
+
+  const fd = new FormData();
+  fd.append("csv_file", file);
+
+  await fetch("/analyze", { method:"POST", body: fd });
+}
+
+function predict() {
+  const form = document.getElementById("studentForm");
+  const data = Object.fromEntries(new FormData(form));
+
+  fetch("/predict", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    document.querySelector(".output").textContent = res.content;
+    document.getElementById("studentInsight").style.display="block";
+  });
+}
+</script>
+
+</body>
+</html>
