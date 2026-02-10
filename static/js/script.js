@@ -39,7 +39,7 @@ function render_charts(MODEL_OUTPUT) {
       // logic for spider charts
       // single student score value 
       if (MODEL_OUTPUT.is_predicted){
-      document.getElementById(MODEL_OUTPUT.type).getElementsByTagName[0].style.display="block";
+      document.getElementById("displayScore").style.display="block";
       document.getElementById("predictedScore").innerText = MODEL_OUTPUT.score_value;
       }
       //  spider chart
