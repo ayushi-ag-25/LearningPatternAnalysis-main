@@ -38,11 +38,10 @@ function render_charts(MODEL_OUTPUT) {
   if (MODEL_OUTPUT.type==="single"){
       // logic for spider charts
       // single student score value 
-      if (MODEL_OUTPUT.is_predicted==="True"){
-        // write the logic which enables us to show the predictedScore only in the case when the score is predicted and not when its given
-      }
+      if (MODEL_OUTPUT.is_predicted){
+      document.getElementById(MODEL_OUTPUT.type).getElementsByTagName[0].style.display="block";
       document.getElementById("predictedScore").innerText = MODEL_OUTPUT.score_value;
-     
+      }
       //  spider chart
       chartInstances["spiderChart"]=new Chart(document.getElementById("spiderChart"), {
           type: "radar",
