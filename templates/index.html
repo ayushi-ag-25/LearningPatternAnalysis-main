@@ -216,10 +216,32 @@
     
     <!-- the card logic for single student case -->
     <div id="single" class="grid">
-        <p>Predicted Score: <strong id="predictedScore"></strong></p>
+        <p id="displayScore">Predicted Score: <strong id="predictedScore"></strong></p>
+        <div id="wrapper">
         <div class="chart-container">
           <canvas id="spiderChart"></canvas>
         </div>
+          <!--added a list explaining our 5 meta feature  -->
+        <ul class="reduction-list" style="list-style: none; padding: 0; margin: 0;">
+              <li class="reduction-item">
+                <span class="theme-label">🎯 Academic Drive</span> = Hours Studied + Attendance + Previous Scores + Motivation Level
+              </li>
+              <li class="reduction-item">
+                <span class="theme-label">🛠️ Resource Access</span> = Resources + Internet + Tutoring + Income + Teacher Quality + School Type
+              </li>
+              <li class="reduction-item">
+                <span class="theme-label">🏠 Family Capital</span> = Parental Involvement + Parental Education
+              </li>
+              <li class="reduction-item">
+                <span class="theme-label">🧘 Personal Wellbeing</span> = Sleep Hours + Physical Activity + Extracurriculars
+              </li>
+              <li class="reduction-item">
+                <span class="theme-label">🌍 Environmental Stability</span> = Peer Influence + Home Distance + Learning Disabilities
+              </li>
+          </ul>
+        </div>
+      
+          
         <!-- the AI insight part -->
         <div id="single_insights" class="insights">
            <!-- here we will show AI insights -->

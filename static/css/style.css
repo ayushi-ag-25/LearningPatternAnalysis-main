@@ -75,12 +75,12 @@
       background-color: #fff;
     }
     /* set  this way to ensure that u dont see the chart canvases first time u land the site */
-    #single,#batch{
+    #single,#batch,#displayScore{
       display:none
     }
    
     /* layout of the charts */
-    #pies,#bars{
+    #wrapper,#pies,#bars{
       display:flex;
       flex-wrap:wrap;
       justify-content: space-around;
