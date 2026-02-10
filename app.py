@@ -8,7 +8,7 @@ from utilities import analyze
 app = Flask(__name__)
 
 # CONFIGURATION: Set your API Key here or as an environment variable
-GEMINI_API_KEY = "" #enter a value here at runtime
+GEMINI_API_KEY = "AIzaSyBGE2sH8HbpK877YlHWq0ajwHmxFfeX5fc" #enter a value here at runtime
 
 def get_ai_insight(data_summary):
     """Calls Gemini API to generate structured pedagogical insights using HTML formatting."""
