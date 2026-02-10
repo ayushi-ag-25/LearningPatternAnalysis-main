@@ -80,7 +80,7 @@
     }
    
     /* layout of the charts */
-    #pies,#bars{
+    #wrapper,#pies,#bars{
       display:flex;
       flex-wrap:wrap;
       justify-content: space-around;
