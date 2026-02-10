@@ -75,7 +75,7 @@
       background-color: #fff;
     }
     /* set  this way to ensure that u dont see the chart canvases first time u land the site */
-    #single,#batch{
+    #single,#batch,#displayScore{
       display:none
     }
    
